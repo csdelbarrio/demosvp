@@ -1,29 +1,24 @@
-# SVP · Sistema de Vigilancia de Plataformas de Vivienda Vacacional
+# SVP - Vigilancia Plataformas de Vivienda Vacacional
 
-Demo interactiva desarrollada por el **Área de Inteligencia Económica** de la Secretaría General de Consumo y Juego (SGCJ) para ilustrar las capacidades del Sistema de Vigilancia de Precios (SVP) aplicado al mercado de alquiler vacacional.
+Demo interactiva del Sistema de Vigilancia de Precios (SVP).
+Area de Inteligencia Economica - SGCJ.
 
-## Descripción
+## Pestanas
 
-La herramienta monitoriza de forma continua los anuncios publicados en las principales plataformas de alquiler vacacional (Airbnb, Booking.com, Vrbo, HomeToGo) y detecta automáticamente anomalías como ausencia de licencia turística, precios abusivos, fraude en los datos del anuncio y duplicados entre plataformas.
+- **Global**: comparativa de anomalias entre Airbnb, Booking.com, Vrbo y HomeToGo
+- **Detalle por plataforma**: desglose por tipo de anomalia y zona geografica  
+- **CPU vs GPU**: demo en tiempo real del rendimiento de inferencia LLM con y sin GPU en NubeSARA
 
-## Contenido de la demo
+## Instalacion
 
-- **Vista global** — comparativa de anomalías entre plataformas con evolución temporal
-- **Detalle por plataforma** — desglose por tipo de infracción y zona geográfica
-- **CPU vs GPU** — demostración del rendimiento de inferencia de modelos de lenguaje con y sin aceleración GPU en NubeSARA
+    npm install
+    npm run dev
 
-## Instalación
-```bash
-npm install
-npm run dev
-```
+## Stack
 
-## Tecnología
+React 18 + Vite + Recharts + API Anthropic
 
-- React 18 + Vite
-- Recharts
-- Anthropic API
+## Contexto tecnico
 
-## Contexto técnico
-
-La infraestructura se despliega en **NubeSARA** dentro de la red RedSARA. El procesamiento de texto libre de anuncios —que puede contener datos personales— se realiza íntegramente on-premise por exigencia del **Esquema Nacional de Seguridad (ENS) categoría Alta**.
+Infraestructura desplegada en NubeSARA (RedSARA). Requisitos ENS categoria Alta.
+El procesamiento de texto libre de anuncios se realiza on-premise por exigencia normativa.

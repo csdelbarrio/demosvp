@@ -646,15 +646,21 @@ export default function App() {
   const [plats,   setPlats]   = useState(PLATS_BASE);
 
   useEffect(()=>{
-    fetch('./data_madrid.json').then(r=>r.json()).then(data=>{
-      const zonas   = (data.barrios||[]).map(b=>({ z:b.neighbourhood, sin:b.sin_licencia, precio:b.precio_abusivo, multi:b.multi_anuncio, dup:b.duplicado }));
-      const ejemplos= (data.ejemplos||[]).slice(0,30).map(e=>({ id:e.id, zona:e.zona, titulo:e.titulo, precio:e.precio, tipo:e.tipo, riesgo:e.riesgo, url:e.url }));
-      setPlats(prev=>prev.map(p=>p.id==='airbnb'?{...p,
-        anuncios:data.total_anuncios, anomalias:data.total_anomalias, tasa:data.tasa_anomalia,
-        sinLicencia:data.sin_licencia, precioAbusivo:data.precio_abusivo,
-        multiAnuncio:data.multi_anuncio, duplicados:data.duplicados,
-        zonas, ejemplos, fuente:data.fuente }:p));
-    }).catch(()=>{});
+    const cargar = (archivo, platId) =>
+      fetch(archivo).then(r=>r.json()).then(data=>{
+        const zonas   = (data.barrios||[]).map(b=>({ z:b.neighbourhood, sin:b.sin_licencia, precio:b.precio_abusivo, multi:b.multi_anuncio, dup:b.duplicado }));
+        const ejemplos= (data.ejemplos||[]).slice(0,30).map(e=>({ id:e.id, zona:e.zona, titulo:e.titulo, precio:e.precio, tipo:e.tipo, riesgo:e.riesgo, url:e.url||null }));
+        setPlats(prev=>prev.map(p=>p.id===platId?{...p,
+          anuncios:data.total_anuncios, anomalias:data.total_anomalias, tasa:data.tasa_anomalia,
+          sinLicencia:data.sin_licencia, precioAbusivo:data.precio_abusivo,
+          multiAnuncio:data.multi_anuncio, duplicados:data.duplicados,
+          zonas, ejemplos, fuente:data.fuente }:p));
+      }).catch(()=>{});
+
+    cargar('./data_madrid.json', 'airbnb');
+    cargar('./data_booking.json', 'booking');
+    cargar('./data_vrbo.json', 'vrbo');
+    cargar('./data_hometogo.json', 'hometogo');
   },[]);
 
   const goPlat = p=>{ setPlatSel(p); setTab('detalle'); };
